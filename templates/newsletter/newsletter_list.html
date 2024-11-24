@@ -1,0 +1,24 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+<h2>Список рассылок</h2>
+<a href="{% url 'create_newsletter' %}">Создать новую рассылку</a>
+<table>
+    <tr>
+        <th>Тема</th>
+        <th>Статус</th>
+        <th>Действия</th>
+    </tr>
+    {% for newsletter in object_list %}
+    <tr>
+        <td>{{ newsletter.message.subject }}</td>
+        <td>{{ newsletter.status }}</td>
+        <td>
+            <a href="{% url 'newsletter_detail' newsletter.pk %}">Посмотреть</a>
+            <a href="{% url 'newsletter_edit' newsletter.pk %}">Редактировать</a>
+            <a href="{% url 'newsletter_delete' newsletter.pk %}">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

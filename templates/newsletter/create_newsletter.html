@@ -1,0 +1,10 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+<h2>Создать новую рассылку</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Создать рассылку</button>
+</form>
+{% endblock %}

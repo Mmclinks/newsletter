@@ -167,9 +167,3 @@ db.sqlite
 
 #flake8
 .flake8
-
-newsletter
-
-static
-
-templates

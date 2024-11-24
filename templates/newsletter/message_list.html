@@ -1,0 +1,23 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+<h2>Список сообщений</h2>
+<a href="{% url 'create_message' %}">Создать новое сообщение</a>
+<table>
+    <tr>
+        <th>Тема</th>
+        <th>Тело сообщения</th>
+        <th>Действия</th>
+    </tr>
+    {% for message in object_list %}
+    <tr>
+        <td>{{ message.subject }}</td>
+        <td>{{ message.body|slice:":50" }}...</td>
+        <td>
+            <a href="{% url 'message_edit' message.pk %}">Редактировать</a>
+            <a href="{% url 'message_delete' message.pk %}">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
