@@ -1,0 +1,30 @@
+{% extends 'base_templates/base.html' %}
+{% block content %}
+<a href="{% url 'mailings:mailing_list' %}" class="btn btn-primary">Назад к списку рассылок</a>
+<h2>Статус рассылки #{{ mailing.id }}</h2>
+<p>Статус: {{ mailing.status }}</p>
+<h3>Попытки отправки:</h3>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Дата и время</th>
+        <th>Имя получателя</th>
+        <th>Email получателя</th>
+        <th>Статус</th>
+        <th>Ответ сервера</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for attempt in attempts %}
+    <tr>
+        <td>{{ attempt.attempt_time }}</td>
+        <td>{{ attempt.recipient.full_name }}</td>  <!-- Имя получателя -->
+        <td>{{ attempt.recipient.email }}</td>      <!-- Email получателя -->
+        <td>{{ attempt.status }}</td>
+        <td>{{ attempt.response }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a href="{% url 'mailings:mailing_list' %}" class="btn btn-primary">Назад к списку рассылок</a>
+{% endblock %}

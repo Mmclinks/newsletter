@@ -1,0 +1,34 @@
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+{% block content %}
+<h1 class="text-center">Главная страница</h1>
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-4 mx-auto">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <p>Всего рассылок: {{ total_mailings }}</p>
+                        <p>Активных рассылок: {{ active_mailings }}</p>
+                        <p>Уникальных получателей: {{ unique_recipients }}</p>
+                        {% if user.is_authenticated %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{% url 'clients:client_list' %}" role="button">Получатели</a>
+                            </div>
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{% url 'messages:message_list' %}" role="button">Сообщения</a>
+                            </div>
+                            <div class="btn-group">
+                                <a class="btn btn-primary" href="{% url 'mailings:mailing_list' %}" role="button">Рассылки</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

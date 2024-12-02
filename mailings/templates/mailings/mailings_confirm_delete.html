@@ -1,0 +1,15 @@
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container mt-5 text-center">
+    <h2 class="mb-4">Удаление рассылки!</h2>
+
+    <p class="card-text">Вы уверены, что хотите удалить рассылку '{{ object.subject }}'?</p>
+
+    <form method="post" class="d-flex justify-content-center">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger me-2">Удалить</button>
+        <a class="btn btn-secondary" href="{% url 'messages:message_list' %}" role="button">Отмена</a>
+    </form>
+</div>
+{% endblock %}

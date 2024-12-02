@@ -1,0 +1,27 @@
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-6">
+                <div class="card shadow-sm w-100">
+<!--                    <img src="{{ clients.preview_image | media_filter }}" class="img-fluid" style="height: 400px; object-fit: cover; width: 100%;">-->
+                    <div class="card-body">
+                        <h1 class="card-title text-center">{{ message.subject }}</h1>
+                        <p class="card-text">Текст: {{ message.body }}</p>
+                        <p class="card-text">Владелец: {{ message.owner }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="btn btn-primary" href="{% url 'messages:message_list' %}" role="button">Обратно к списку</a>
+                            {% if user == message.owner %}
+                            <a class="btn btn-primary" href="{% url 'messages:message_update' message.id %}" role="button">Редактировать</a>
+                            <a class="btn btn-danger" href="{% url 'messages:message_delete' message.id %}" role="button">Удалить</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

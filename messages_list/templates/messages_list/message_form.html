@@ -1,0 +1,31 @@
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">{% if is_update %}Редактирование сообщения{% else %}Создание сообщения{% endif %}</h2>
+    <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            <div class="mb-3">
+                <label for="id_subject" class="form-label">Тема сообшения</label>
+                {{ form.subject|add_class:"form-control" }}
+                {{ form.subject.errors }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_body" class="form-label">Текст сообщения</label>
+                {{ form.body|add_class:"form-control" }}
+                {{ form.body.errors }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-primary"
+               href="{% if is_update%}{% url 'messages:message_detail' message.pk %}{% else %}{% url 'messages:message_list' %}{% endif %}"
+               role="button">Назад</a>
+        </form>
+    </form>
+</div>
+{% endblock %}

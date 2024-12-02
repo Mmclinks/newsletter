@@ -1,0 +1,34 @@
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <h1 class="card-title text-center">Сейчас будет запущена рассылка "{{ mailing.message }}"!</h1>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-6">
+                <div class="card shadow-sm w-100">
+<!--                    <img src="{{ clients.preview_image | media_filter }}" class="img-fluid" style="height: 400px; object-fit: cover; width: 100%;">-->
+                    <div class="card-body">
+                        <p class="card-text">Начало: {{ mailing.start_time }}</p>
+                        <p class="card-text">Окончание: {{ mailing.end_time }}</p>
+                        <p class="card-text">Статус: {{ mailing.status }}</p>
+                        <p class="card-text">Сообщение: {{ mailing.message }}</p>
+                        <p class="card-text">Получатели:</p>
+                            <ul>
+                                {% for recipient in mailing.recipients.all %}
+                                    <li>{{ recipient.full_name }} - {{ recipient.email }}</li>
+                                {% empty %}
+                                    <li>Нет получателей для этой рассылки.</li>
+                                {% endfor %}
+                            </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="btn btn-primary" href="{% url 'mailings:mailing_list' %}" role="button">Обратно к списку</a>
+                            <a class="btn btn-danger" href="{% url 'mailings:mailing_send' mailing.id %}" role="button">Запустить сейчас</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

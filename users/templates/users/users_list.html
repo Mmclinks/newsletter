@@ -1,0 +1,49 @@
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <h2 class="text-center mb-4">Список пользователей</h2>
+        <h3 class="text-center mb-4">Всего пользователей: {{ users|length }}</h3>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Страна</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Действия</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone_number }}</td>
+            <td>{{ user.country }}</td>
+            <td>{% if user.is_active %}Активен{% else %}Деактивирован{% endif %}</td>
+            <td>
+                {% if not user.is_active %}
+                <form method="POST" action="{% url 'users:activate_user' user.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">Активировать</button>
+                </form>
+                {% endif %}
+                {% if user.is_active %}
+                <form method="POST" action="{% url 'users:deactivate_user' user.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Деактивировать</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

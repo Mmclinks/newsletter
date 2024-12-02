@@ -1,0 +1,57 @@
+
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">
+        {% if is_update %}
+            Редактирование рассылки
+        {% else %}
+            Создание рассылки
+        {% endif %}
+    </h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        <div class="mb-3">
+            <label for="id_start_time" class="form-label">Начало</label>
+            {{ form.start_time|add_class:"form-control" }}
+            {{ form.start_time.errors }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_end_time" class="form-label">Окончание</label>
+            {{ form.end_time|add_class:"form-control" }}
+            {{ form.end_time.errors }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_status" class="form-label">Статус</label>
+            {{ form.status|add_class:"form-control" }}
+            {{ form.status.errors }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_message" class="form-label">Сообщение</label>
+            {{ form.message|add_class:"form-control" }}
+            {{ form.message.errors }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_recipients" class="form-label">Получатели</label>
+            {{ form.recipients|add_class:"form-control" }}
+            {{ form.recipients.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+
+        <a class="btn btn-primary"
+           href="{% if is_update %}{% url 'mailings:mailing_detail' mailing.pk %}{% else %}{% url 'mailings:mailing_list' %}{% endif %}"
+           role="button">Назад</a>
+    </form>
+</div>
+{% endblock %}
