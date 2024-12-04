@@ -1,0 +1,3 @@
+{% for stat in newsletters %}
+    <p>{{ stat.newsletter.subject }} - Successful: {{ stat.successful_sends }}, Failed: {{ stat.failed_sends }}</p>
+{% endfor %}

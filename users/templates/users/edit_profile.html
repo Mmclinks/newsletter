@@ -1,0 +1,15 @@
+{% extends 'base_templates/base.html' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2>Edit Profile</h2>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Save changes</button>
+      <a class="btn btn-secondary" href="{% url 'users:profile' user.id %}" role="button">Отмена</a>
+    </form>
+  </div>
+{% endblock %}

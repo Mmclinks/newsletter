@@ -1,0 +1,36 @@
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">{% if is_update %}Редактирование клиента{% else %}Создание клиента{% endif %}</h2>
+    <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {{ form.non_field_errors }}
+
+            <div class="mb-3">
+                <label for="id_full_name" class="form-label">Имя</label>
+                {{ form.full_name|add_class:"form-control" }}
+                {{ form.full_name.errors }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_email" class="form-label">Почта</label>
+                {{ form.email|add_class:"form-control" }}
+                {{ form.email.errors }}
+            </div>
+
+            <div class="mb-3">
+                <label for="id_comment" class="form-label">Комментарий</label>
+                {{ form.comment|add_class:"form-control" }}
+                {{ form.comment.errors }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-primary"
+               href="{% if is_update%}{% url 'clients:client_detail' client.id %}{% else %}{% url 'clients:client_list' %}{% endif %}"
+               role="button">Назад</a>
+        </form>
+</div>
+{% endblock %}

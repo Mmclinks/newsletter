@@ -1,0 +1,25 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+<h2>Список клиентов</h2>
+<a href="{% url 'create_customer' %}">Добавить нового клиента</a>
+<table>
+    <tr>
+        <th>Ф.И.О.</th>
+        <th>Email</th>
+        <th>Комментарий</th>
+        <th>Действия</th>
+    </tr>
+    {% for customer in object_list %}
+    <tr>
+        <td>{{ customer.full_name }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.comment }}</td>
+        <td>
+            <a href="{% url 'customer_edit' customer.pk %}">Редактировать</a>
+            <a href="{% url 'customer_delete' customer.pk %}">Удалить</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

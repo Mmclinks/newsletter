@@ -1,0 +1,56 @@
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-6">
+                <div class="card shadow-sm w-100">
+                    <!--                    <img src="{{ clients.preview_image | media_filter }}" class="img-fluid" style="height: 400px; object-fit: cover; width: 100%;">-->
+                    <div class="card-body">
+                        {% if mailing.status == 'Создана' and user == mailing.owner %}
+                        <a class="btn btn-danger" href="{% url 'mailings:mailing_confirm_send' mailing.id %}"
+                           role="button">Запустить рассылку</a>
+                        {% endif %}
+                        <a class="btn btn-primary" href="{% url 'mailings:mailing_status'  mailing.pk%}" role="button">Статистика</a>
+                        <h1 class="card-title text-center">{{ mailing.message }}</h1>
+                        <p class="card-text">Начало: {{ mailing.start_time }}</p>
+                        <p class="card-text">Окончание: {{ mailing.end_time }}</p>
+                        <p class="card-text">Статус: {{ mailing.status }}</p>
+                        <p class="card-text">Сообщение: {{ mailing.message }}</p>
+                        <p class="card-text">Получатели:</p>
+                        <ul>
+                            {% for recipient in mailing.recipients.all %}
+                            <li>{{ recipient.full_name }} - {{ recipient.email }}</li>
+                            {% empty %}
+                            <li>Нет получателей для этой рассылки.</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="btn btn-primary" href="{% url 'mailings:mailing_list' %}" role="button">Обратно к
+                                списку</a>
+                            {% if perms.users.can_disable_mailing %}
+                            <form method="POST" action="{% url 'mailings:mailing_status_update' mailing.id %}">
+                                {% csrf_token %}
+                                {% if mailing.status != 'Завершена' %}
+                                <button name="action" value="deactivate" class="btn btn-danger">Завершить</button>
+                                {% endif %}
+                                {% if mailing.status != 'Запущена' %}
+                                <button name="action" value="activate" class="btn btn-success">Активировать</button>
+                                {% endif %}
+                                {% endif %}
+                            </form>
+                            {% if user == mailing.owner %}
+                            <a class="btn btn-primary" href="{% url 'mailings:mailing_update' mailing.id %}"
+                               role="button">Редактировать</a>
+                            <a class="btn btn-danger" href="{% url 'mailings:mailing_delete' mailing.id %}"
+                               role="button">Удалить</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

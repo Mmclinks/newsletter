@@ -1,0 +1,28 @@
+{% extends 'base_templates/base.html' %}
+{% load my_tags %}
+{% block content %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-6">
+                <div class="card shadow-sm w-100">
+                    <div class="card-body">
+                        <h1 class="card-title text-center">{{ client.full_name }}</h1>
+                        <p class="card-text">Почта: {{ client.email }}</p>
+                        <p class="card-text">Владелец: {{ client.owner }}</p>
+                        <p class="card-text text-muted">Комментарий: {{ client.comment }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="btn btn-primary" href="{% url 'clients:client_list' %}" role="button">Обратно к
+                                списку</a>
+                            {% if user == client.owner %}
+                            <a class="btn btn-primary" href="{% url 'clients:client_update' client.id %}" role="button">Редактировать</a>
+                            <a class="btn btn-danger" href="{% url 'clients:client_delete' client.id %}" role="button">Удалить</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+<h2>Подробности рассылки</h2>
+<p><strong>Тема сообщения:</strong> {{ newsletter.message.subject }}</p>
+<p><strong>Статус:</strong> {{ newsletter.status }}</p>
+<p><strong>Дата начала:</strong> {{ newsletter.start_datetime }}</p>
+<p><strong>Дата окончания:</strong> {{ newsletter.end_datetime }}</p>
+<h3>Получатели рассылки:</h3>
+<ul>
+    {% for customer in newsletter.recipients.all %}
+    <li>{{ customer.full_name }} ({{ customer.email }})</li>
+    {% endfor %}
+</ul>
+<h3>Попытки рассылки:</h3>
+<ul>
+    {% for attempt in newsletter.sendattempt_set.all %}
+    <li>{{ attempt.datetime }} - {{ attempt.status }} - {{ attempt.server_response }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

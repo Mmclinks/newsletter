@@ -1,0 +1,8 @@
+{% extends 'newsletter/base.html' %}
+
+{% block content %}
+<h1>Добро пожаловать в систему управления рассылками</h1>
+<p>Всего рассылок: {{ total_newsletters }}</p>
+<p>Активных рассылок: {{ active_newsletters }}</p>
+<p>Уникальных получателей: {{ unique_customers }}</p>
+{% endblock %}
